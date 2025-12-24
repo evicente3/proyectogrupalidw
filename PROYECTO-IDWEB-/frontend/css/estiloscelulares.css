@@ -1,0 +1,511 @@
+/* ====================================
+   1. ESTILOS GLOBALES Y CONTENEDOR PRINCIPAL
+   ==================================== */
+/* Usamos scroll-padding-top para que los saltos de ancla (#) 
+   no queden ocultos debajo del header fijo */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Ajusta esto a la altura de tu header */
+}
+
+body {
+    font-family: 'Poppins', sans-serif; 
+    line-height: 1.6;
+    background-color: #f4f7f9;
+    color: #333;
+    margin: 0;
+    min-height: 100vh;
+    /* Ya no necesitamos padding-bottom porque el footer no es fijo */
+}
+
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0;
+    background-color: transparent;
+}
+
+section {
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    color: #1a73e8; 
+    border-bottom: 3px solid #e0e0e0;
+    padding-bottom: 12px;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-weight: 600;
+    text-align: center;
+}
+
+h3 {
+    color: #1a73e8; 
+    margin-top: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* ====================================
+   2. ENCABEZADO Y NAVEGACIÓN (Estilo Flotante)
+   ==================================== */
+
+.main-header {
+    background-color: rgba(26, 115, 232, 0.95);
+    color: white;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; 
+    top: 0;
+    /* Usamos left/right 0 en lugar de width 100% para mejor compatibilidad */
+    left: 0;
+    right: 0; 
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    /* Damos una altura mínima para consistencia */
+    min-height: 50px; 
+    box-sizing: border-box; /* Importante para que el padding no afecte el ancho */
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.logo-pro {
+    color: #00C6FF;
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0; 
+    display: flex; 
+    gap: 25px; 
+    margin: 0;
+}
+
+.main-nav ul a {
+    color: white; 
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 0;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.main-nav ul a:hover,
+.main-nav ul a.active {
+    color: #00C6FF;
+    border-bottom: 2px solid #00C6FF;
+}
+
+.header-cta-button {
+    background-color: #00C6FF;
+    color: #1a73e8;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: none;
+    white-space: nowrap; /* Evita que el texto del botón se parta */
+}
+
+.header-cta-button:hover {
+    background-color: #00A6D6;
+    transform: scale(1.05);
+}
+
+/* ====================================
+   3. HERO SECTION (Estilos de Home y Celulares)
+   ==================================== */
+
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../imagenes/celulares/herocelulares.webp') no-repeat center center; 
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    /* El margen superior debe ser igual (o mayor) a la altura del header */
+    margin-top: 80px; 
+    border-radius: 12px; /* Añadido para que coincida con las secciones */
+    margin-left: 5%; /* Añadido para que coincida con el main */
+    margin-right: 5%; /* Añadido para que coincida con el main */
+    box-sizing: border-box;
+}
+
+/* Estilo específico para la página de home */
+.hero-home {
+    height: 70vh;
+}
+
+/* Estilo específico para la página de celulares */
+.hero-celulares {
+    height: 50vh;
+    text-align: center;
+    /* Imagen de fondo específica para celulares */
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('../imagenes/celulares/herocelulares.webp') no-repeat center center;
+    background-size: cover;
+}
+
+.hero-content {
+    max-width: 900px;
+    color: white;
+    padding: 20px;
+}
+
+/* Diferenciamos el H1 de home y el de páginas internas */
+.hero-home .hero-content h1 {
+    font-size: 3.5em;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.hero-home .hero-content p {
+    font-size: 1.5em;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.hero-celulares .hero-content h1 {
+    font-size: 3em;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.hero-celulares .hero-content p {
+    font-size: 1.3em;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Botones centrados en hero-celulares */
+.hero-celulares .hero-buttons {
+    justify-content: center;
+}
+
+.cta-primary, .cta-secondary {
+    padding: 15px 35px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05em;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-primary {
+    background-color: #00C6FF;
+    color: #1a73e8;
+    box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
+}
+
+.cta-primary:hover {
+    background-color: #00A6D6;
+    transform: translateY(-2px);
+}
+
+.cta-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.cta-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* ====================================
+   4. SECCIÓN "QUIÉNES SOMOS" (Específico de Home)
+   ==================================== */
+.about-container {
+    display: flex; 
+    justify-content: space-between; 
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-card {
+    flex: 1 1 300px;
+    padding: 20px;
+    border-left: 4px solid #3c6ed1;
+    background-color: #f7f9fb;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(26, 115, 232, 0.15);
+}
+
+/* ====================================
+   5. SECCIÓN DE PRODUCTOS (CSS GRID) - ¡MEJORADO!
+   ==================================== */
+
+.productos-grid {
+    display: grid;
+    /* Usamos 320px como mínimo para más flexibilidad */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.producto-card {
+    border: 1px solid #e0e0e0;
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left; /* Alineamos a la izquierda para el contenido */
+    
+    /* ¡LA MAGIA! Usamos Flexbox para la tarjeta */
+    display: flex;
+    flex-direction: column;
+}
+
+.producto-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card-image-container {
+    height: 220px; /* Un poco más de altura para la imagen */
+    overflow: hidden;
+}
+
+.producto-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.producto-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Nuevo contenedor para el contenido de texto */
+.card-content {
+    padding: 20px 25px 25px 25px;
+    /* ¡LA MAGIA! Esto hace que el contenedor crezca
+       y empuje los elementos de abajo (como los "detail-box") 
+       haciendo que todas las tarjetas tengan la misma altura */
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content h3 {
+    margin-top: 0;
+    padding: 0;
+    font-size: 1.4em;
+}
+
+.card-content p {
+    padding: 0;
+    font-size: 0.95em;
+    color: #555;
+    /* Hacemos que el párrafo también sea flexible */
+    flex-grow: 1; 
+}
+
+
+/* ====================================
+   6. DETALLES DE PRODUCTO (Específico de Celulares)
+   ==================================== */
+
+.detail-box {
+    padding: 25px;
+    border-top: 1px solid #eee;
+}
+
+.especificaciones {
+    background-color: #f7f9fb; /* Un color más suave */
+}
+
+.enlaces-compra {
+    background-color: #fdfdfd;
+}
+
+.detail-box h3 {
+    color: #1a73e8;
+    font-size: 1.1em; /* Un poco más pequeño */
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 8px;
+    font-weight: 600;
+}
+
+.detail-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.especificaciones li {
+    padding: 8px 0;
+    border-bottom: 1px dotted #ccc;
+    font-size: 0.9em;
+}
+
+.especificaciones li:last-child {
+    border-bottom: none;
+}
+
+.enlaces-compra li {
+    padding: 8px 0;
+}
+
+.enlaces-compra a {
+    text-decoration: none;
+    color: #00C6FF;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    font-size: 0.9em;
+}
+
+.enlaces-compra a:hover {
+    color: #1a73e8;
+    text-decoration: underline;
+}
+
+/* ====================================
+   7. PIE DE PÁGINA (¡CORREGIDO!)
+   ==================================== */
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 30px 20px;
+    /* Cambiado a 'static'. Ya no está fijo. */
+    position: static; 
+    width: 100%;
+    margin-top: 40px; /* Espacio antes del footer */
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* ====================================
+   8. RESPONSIVE DESIGN (Consistente)
+   ==================================== */
+
+@media (max-width: 992px) {
+    .main-header {
+        flex-wrap: wrap;
+        padding: 15px 20px;
+    }
+
+    .main-nav {
+        order: 3;
+        flex-basis: 100%;
+        margin-top: 10px;
+        justify-content: center;
+    }
+
+    .hero-home .hero-content h1,
+    .hero-celulares .hero-content h1 {
+        font-size: 2.5em;
+    }
+    .hero-home .hero-content p,
+    .hero-celulares .hero-content p {
+        font-size: 1.2em;
+    }
+
+    /* Hacemos el grid de 1 columna en tabletas */
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Ajustes para el header en móvil */
+    .main-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 20px;
+    }
+
+    .header-cta-button {
+        position: absolute; 
+        top: 15px;
+        right: 20px;
+        padding: 8px 15px;
+    }
+
+    .main-nav {
+        order: 2; /* Lo ponemos después del logo */
+        margin-top: 15px;
+        align-self: center; /* Centramos la nav */
+    }
+
+    .main-nav ul {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    /* Ajuste para el hero */
+    .hero-section {
+        margin-top: 120px; /* Más margen porque el header ahora es más alto */
+        margin-left: 20px;
+        margin-right: 20px;
+        text-align: center;
+    }
+    
+    .hero-content {
+        text-align: center;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-primary, .cta-secondary {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+
+    .info-card {
+        flex: 1 1 100%; 
+    }
+    
+    section {
+        padding: 25px; /* Menos padding en móvil */
+    }
+
+    /* Hacemos el grid más angosto en móvil */
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Reducimos el mínimo del grid en pantallas pequeñas */
+    .productos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    }
+}

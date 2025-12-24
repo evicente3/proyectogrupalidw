@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablets de Alto Rendimiento - Vortex Tech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/estilostablets.css"> 
+    <script defer src="../js/auth-ui.js"></script>
+
+</head>
+<body>  
+    <header class="main-header">
+        <div class="logo">Vortex<span class="logo-pro">Tech</span></div>
+        <nav class="main-nav">
+            <ul>
+                 <a href="home.html">Inicio</a>
+                <a href="celulares.html">Celulares</a>
+                <a href="laptops.html">Laptops</a>
+                <a href="tablets.html">Tablets</a>
+                <a href="televisores.html">Televisores</a>
+                <a href="about.html">Quiénes Somos</a>
+                <a href="registro.html">Registro</a>
+            </ul>
+        </nav>
+        <a href="login.html" class="header-cta-button" id="btn-login-header">Login</a>
+
+    </header>
+    
+    <section class="hero-section hero-tablets">
+        <div class="hero-content">
+            <h1>Potencia y Portabilidad en tus Manos</h1>
+            <p>Desde diseño gráfico hasta productividad extrema, encuentra la tablet que se adapta a tu ritmo de vida.</p>
+            <div class="hero-buttons">
+                <a href="#catalogo" class="cta-primary">Explorar Catálogo</a>
+                <a href="#" class="cta-secondary">Accesorios Pro</a>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section id="catalogo">
+            <h2>Modelos Destacados 2025</h2>
+            <div class="productos-grid">
+                
+                <article class="producto-card">
+                    <div class="badge">Lo más potente</div>
+                    <img src="../imagenes/televisores/padpro4.png" alt="iPad Pro M4">
+                    <div class="card-content">
+                        <h3>iPad Pro M4 (13")</h3>
+                        <p>La tablet más delgada de Apple con el chip M4, ofreciendo un rendimiento asombroso y una pantalla Ultra Retina XDR.</p>
+                    </div>
+                    <div class="especificaciones detail-box">
+                        <h3>Especificaciones:</h3>
+                        <ul>
+                            <li>Pantalla: OLED Tandem 13"</li>
+                            <li>Procesador: Chip M4 de Apple</li>
+                            <li>Almacenamiento: Hasta 2TB</li>
+                            <li>Adicional: Compatible con Apple Pencil Pro</li>
+                        </ul>
+                    </div>
+                    <div class="enlaces-compra detail-box">
+                        <h3>Dónde comprar:</h3>
+                        <ul>
+                            <li><a href="https://www.apple.com" target="_blank">Apple Store</a></li>
+                            <li><a href="https://www.amazon.com" target="_blank">Amazon</a></li>
+                        </ul>
+                        <button class="btn-comprar" data-id-producto="3">
+                         Comprar
+                         </button>
+
+                    </div>    
+                </article>
+
+                <article class="producto-card">
+                    <div class="badge">Pantalla Gigante</div>
+                    <img src="../imagenes/televisores/tabs10.png" alt="Galaxy Tab S10 Ultra">
+                    <div class="card-content">
+                        <h3>Samsung Galaxy Tab S10 Ultra</h3>
+                        <p>Diseñada para la productividad masiva con funciones de Inteligencia Artificial (Galaxy AI) integradas.</p>
+                    </div>
+                    <div class="especificaciones detail-box">
+                        <h3>Especificaciones:</h3>
+                        <ul>
+                            <li>Pantalla: Dynamic AMOLED 2X 14.6"</li>
+                            <li>Procesador: Dimensity 9300+</li>
+                            <li>Resistencia: IP68 (Agua y polvo)</li>
+                            <li>Incluye: S-Pen en la caja</li>
+                        </ul>
+                    </div>
+                    <div class="enlaces-compra detail-box">
+                        <h3>Dónde comprar:</h3>
+                        <ul>
+                            <li><a href="https://www.samsung.com" target="_blank">Samsung Store</a></li>
+                            <li><a href="https://www.bestbuy.com" target="_blank">Best Buy</a></li>
+                        </ul>
+                        <button class="btn-comprar" data-id-producto="8">
+                        Comprar
+                        </button>
+
+                    </div>    
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Vortex Tech. Todos los derechos reservados.</p>
+    </footer>
+    <script src="../main.js"></script>
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    initHeaderButton();
+
+    const botones = document.querySelectorAll(".btn-comprar");
+    botones.forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const idProducto = btn.getAttribute("data-id-producto");
+        try {
+          const resp = await fetch(`${API_BASE}/pedido/nuevo`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+              id_producto: idProducto,
+              cantidad: "1",
+            }),
+          });
+
+          if (resp.status === 401) {
+            alert("Debes iniciar sesión para hacer un pedido.");
+            window.location.href = "login.html";
+            return;
+          }
+
+          const data = await resp.json();
+          if (!data.ok) {
+            alert(data.msg || "No se pudo crear el pedido.");
+            return;
+          }
+
+          alert("Pedido creada correctamente.");
+          window.location.href = "perfil.html";
+        } catch (e) {
+          console.error(e);
+          alert("Error al enviar el pedido.");
+        }
+      });
+    });
+  });
+</script>
+
+</html>

@@ -1,0 +1,20 @@
+# Imagen base oficial
+FROM python:3.12-slim
+
+# Crear carpeta de trabajo
+WORKDIR /app
+
+# Copiar dependencias e instalarlas
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar el código del backend
+COPY backend/ ./backend/
+COPY db/ ./db/
+
+# Puerto donde corre Flask
+EXPOSE 5000
+
+# Comando por defecto
+WORKDIR /app/backend
+CMD ["python", "app.py"]

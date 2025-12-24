@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel admin - VortexTech</title>
+    <link rel="stylesheet" href="../css/estiloshome.css">
+    <script defer src="../js/auth-ui.js"></script>
+
+</head>
+<body>
+  <header class="main-header">
+    <div class="logo">Vortex<span class="logo-pro">Tech</span></div>
+    <nav class="main-nav">
+      <ul>
+        <a href="home.html">Inicio</a>
+                <a href="celulares.html">Celulares</a>
+                <a href="laptops.html">Laptops</a>
+                <a href="tablets.html">Tablets</a>
+                <a href="televisores.html">Televisores</a>
+                <a href="about.html">Quiénes Somos</a>
+                <a href="registro.html">Registro</a>
+      </ul>
+    </nav>
+<a href="login.html" class="header-cta-button" id="btn-login-header">Login</a>
+  </header>
+
+  <main style="margin-top: 120px;">
+    <section>
+      <h2>Panel de administración</h2>
+
+      <h3>Pedidos de todos los usuarios</h3>
+      <div id="tabla-pedidos-admin">
+        <!-- JS cargará datos desde /admin/pedidos -->
+      </div>
+
+      <button id="btn-logout" class="header-cta-button" style="margin-top:20px;">
+        Cerrar sesión
+      </button>
+    </section>
+  </main>
+
+  <script src="../js/auth-ui.js"></script>
+  <script>
+  initHeaderButton();
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Login - Vortex Tech</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/estiloshome.css">
+    <script defer src="../js/auth-ui.js"></script>
+    <script>
+        async function enviarLogin(event) {
+  event.preventDefault();
+
+  const form = document.getElementById("form-login");
+  const email = form.email.value.trim();
+  const password = form.password.value.trim();
+  const msgDiv = document.getElementById("login-mensaje");
+
+  msgDiv.textContent = "";
+  msgDiv.className = "form-mensaje";
+
+  if (!email || !password) {
+    msgDiv.textContent = "Por favor completa todos los campos.";
+    msgDiv.classList.add("error");
+    return;
+  }
+
+  try {
+    const body = new FormData();
+    body.append("email", email);
+    body.append("password", password);
+
+    const resp = await fetch(`${API_BASE}/login`, {
+      method: "POST",
+      body,
+      credentials: "include",
+    });
+
+    let data;
+    try {
+      data = await resp.json();
+    } catch (e) {
+      console.error("Error parseando JSON de /login", e);
+      msgDiv.textContent = "Respuesta no válida del servidor.";
+      msgDiv.classList.add("error");
+      return;
+    }
+
+    console.log("Respuesta /login:", resp.status, data);
+
+    if (!resp.ok || !data.ok) {
+      msgDiv.textContent = data.msg || "Credenciales incorrectas.";
+      msgDiv.classList.add("error");
+      return;
+    }
+
+    msgDiv.textContent = "Login correcto, redirigiendo...";
+    msgDiv.classList.add("ok");
+
+    const meResp = await fetch(`${API_BASE}/me`, {
+      credentials: "include",
+    });
+    const me = await meResp.json();
+
+    if (me.logged && me.rol === "admin") {
+      window.location.href = "panel-admin.html";
+    } else if (me.logged) {
+      window.location.href = "perfil.html";
+    } else {
+      window.location.href = "home.html";
+    }
+  } catch (e) {
+    console.error("Error en fetch /login", e);
+    msgDiv.textContent = "Error de conexión con el servidor.";
+    msgDiv.classList.add("error");
+  }
+}
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("form-login");
+            form.addEventListener("submit", enviarLogin);
+        });
+    </script>
+    <style>
+        /* Estilos básicos para centrar el formulario y mensajes */
+        main.auth-main {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .auth-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        .auth-card h1 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #1a73e8;
+        }
+        .auth-card label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .auth-card input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .auth-card button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            background-color: #1a73e8;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .auth-card button:hover {
+            background-color: #1559b8;
+        }
+        .form-mensaje {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .form-mensaje.error {
+            color: #c62828;
+        }
+        .form-mensaje.ok {
+            color: #2e7d32;
+        }
+        .auth-extra {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .auth-extra a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .auth-extra a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header reutilizando tus estilos generales -->
+    <header class="main-header">
+        <div class="logo">Vortex<span class="logo-pro">Tech</span></div>
+        <nav class="main-nav">
+            <ul>
+                <a href="home.html">Inicio</a>
+                <a href="celulares.html">Celulares</a>
+                <a href="laptops.html">Laptops</a>
+                <a href="tablets.html">Tablets</a>
+                <a href="televisores.html">Televisores</a>
+                <a href="about.html">Quiénes Somos</a>
+                <a href="registro.html">Registro</a>
+            </ul>
+        </nav>
+        <a id="btn-login-header" class="header-cta-button" href="login.html">Login</a>
+    </header>
+
+    <main class="auth-main">
+        <section class="auth-card" aria-labelledby="titulo-login">
+            <h1 id="titulo-login">Iniciar sesión</h1>
+            <form id="form-login" novalidate>
+                <label for="email">Correo electrónico</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                    placeholder="ejemplo@correo.com"
+                />
+
+                <label for="password">Contraseña</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    minlength="6"
+                    autocomplete="current-password"
+                    placeholder="Tu contraseña"
+                />
+
+                <button type="submit">Ingresar</button>
+                <div id="login-mensaje" class="form-mensaje" aria-live="polite"></div>
+            </form>
+            <div class="auth-extra">
+                ¿No tienes cuenta?
+                <a href="registro.html">Regístrate aquí</a>
+            </div>
+        </section>
+    </main>
+    <script>
+  initHeaderButton();
+</script>
+</body>
+
+
+</html>

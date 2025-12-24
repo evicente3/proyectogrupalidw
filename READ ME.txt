@@ -1,0 +1,186 @@
+# TiendaTech – Aplicación Web Empresarial
+
+Aplicación web de tienda de tecnología que permite a usuarios registrarse, iniciar sesión y realizar pedidos de productos (laptops, celulares, tablets y televisores), con un panel de administración para gestionar los pedidos.
+
+## 1. Datos del equipo
+
+- **Nombre del equipo:** *Equipo TiendaTech*
+- **Nombre de la aplicación:** *TiendaTech*
+- **Líder del equipo:** *[Nombre del líder]*
+- **Integrantes:**
+  - *[Nombre 1]*
+  - *[Nombre 2]*
+  - *[Nombre 3]*
+
+## 2. Descripción del proyecto
+
+TiendaTech es una aplicación web empresarial tipo tienda en línea de productos tecnológicos, donde los usuarios pueden registrarse, iniciar sesión, explorar el catálogo y realizar pedidos de productos, mientras que un administrador puede revisar y actualizar el estado de los pedidos desde un panel de administración.
+
+## 3. Funcionalidades implementadas
+
+### 3.1 Frontend (HTML + CSS)
+
+- Página principal de presentación (`home.html`) con navegación a las demás secciones.
+- Más de cinco páginas HTML: `home`, `login`, `registro`, `about`, `perfil`, `panel-admin`, `laptops`, `televisores`, `celulares`, `tablets`.
+- Estilos personalizados para todo el sitio con hojas de estilo como `estiloshome.css`, `estiloslaptops.css`, `estiloscelulares.css`, `estilostablets.css`, `estilostelevisores.css`.
+- Uso de layouts con cabecera, menú de navegación, secciones de contenido y pie de página, manteniendo un estilo coherente en las diferentes páginas.
+
+### 3.2 Frontend (JavaScript)
+
+- Lógica de interfaz y autenticación en `auth-ui.js` para manejar formularios de login y registro desde el frontend.
+- Script `televisor.js` para comportamiento dinámico en la sección de televisores.
+- Manipulación del DOM y manejo de eventos de usuario para mejorar la interactividad (botones, formularios, elementos dinámicos).
+
+### 3.3 Backend en Python (Flask)
+
+- Rutas principales:
+  - Registro de usuarios (`/registro`).
+  - Inicio y cierre de sesión (`/login`, `/logout`).
+  - Consulta del estado de sesión (`/me`).
+  - Creación de pedidos (`/pedido/nuevo`).
+  - Listado de pedidos del usuario (`/mis-pedidos`).
+  - Panel de pedidos para administrador (`/admin/pedidos`, cambio de estado de pedido).
+- Control de roles:
+  - Decorador `login_requerido` para restringir rutas a usuarios autenticados.
+  - Decorador `admin_requerido` para restringir rutas solo a administradores.
+
+### 3.4 Base de datos (MySQL)
+
+- Base de datos: `tienda_tech`.
+- Tablas:
+  - `usuarios`: id, nombre, email, password_hash, rol, creado_en.
+  - `productos`: id, nombre, categoria (`celular`, `laptop`, `tablet`, `televisor`), descripcion, precio, creado_en.
+  - `pedidos`: id, id_usuario, id_producto, cantidad, estado (`pendiente`, `confirmado`, `cancelado`), creado_en.
+- Archivo `db/tienda_tech.sql`:
+  - Crea las tablas `usuarios`, `productos` y `pedidos`.
+  - Inserta datos de ejemplo para usuarios, productos y pedidos (incluye IDs de productos coherentes con el catálogo mostrado en el frontend).
+
+### 3.5 Contenerización (Docker)
+
+> Nota: La aplicación está preparada para ejecutarse en contenedores, aunque la demostración principal puede hacerse en entorno local sin Docker.
+
+- `Dockerfile`:
+  - Imagen base oficial: `python:3.12-slim`.
+  - Instalación de dependencias desde `requirements.txt`.
+  - Copia del código del backend y scripts SQL.
+  - Ejecución de `app.py`.
+- `docker-compose.yml`:
+  - Servicio `web`: aplicación Flask, exponiendo el puerto 5000.
+  - Servicio `db`: MySQL 8, inicializado con scripts SQL (`schema.sql` y `seed.sql`).
+
+## 4. Requisitos para ejecutar
+
+### 4.1 Software necesario
+
+- Python 3.10 o superior.
+- MySQL o MariaDB (accesible desde `localhost`).
+- phpMyAdmin (opcional pero recomendado para importar el SQL).
+- Git (para clonar el repositorio).
+- Navegador web moderno.
+
+### 4.2 Dependencias Python
+
+- Listadas en `requirements.txt` (por ejemplo: Flask, mysql-connector, Werkzeug, etc.).
+
+## 5. Instalación y ejecución en entorno local (recomendado para la demo)
+
+### 5.1. Clonar el repositorio
+
+### 5.2. Crear y activar entorno virtual
+
+**En Windows (PowerShell o CMD):**
+
+python -m venv venv
+venv\Scripts\activate
+
+
+**En Linux/Mac:**
+
+python -m venv venv
+source venv/bin/activate
+
+
+### 5.3. Instalar dependencias
+
+Desde la carpeta `backend` (con el entorno virtual activo):
+
+pip install -r ../requirements.txt
+
+
+### 5.4. Configurar la conexión a MySQL
+
+Editar `backend/config.py` con los datos del servidor local:
+
+DB_HOST = "localhost"
+DB_USER = "root" # o el usuario configurado
+DB_PASSWORD = "TU_CLAVE" # contraseña de MySQL
+DB_NAME = "tienda_tech"
+
+
+### 5.5. Inicializar la base de datos
+
+1. Abrir phpMyAdmin.
+2. Crear la base `tienda_tech` si todavía no existe.
+3. Ir a la pestaña **Importar**.
+4. Seleccionar el archivo:
+
+db/tienda_tech.sql
+
+
+5. Ejecutar la importación.
+
+Esto creará las tablas `usuarios`, `productos`, `pedidos` y cargará datos de ejemplo (usuarios de prueba, productos con IDs, pedidos de ejemplo).
+
+### 5.6. Ejecutar la aplicación
+
+Desde la carpeta `backend`, con el entorno virtual activo:
+
+python app.py
+
+
+Luego abrir en el navegador:
+
+http://localhost:5000
+
+
+La aplicación mostrará la página principal y permitirá registrarse, iniciar sesión, realizar pedidos y usar el panel de administración según el rol.
+
+## 6. Uso básico (manual de usuario breve)
+
+1. Abrir `http://localhost:5000` en el navegador.
+2. Registrarse como nuevo usuario o usar uno de los usuarios de prueba definidos en la base de datos.
+3. Iniciar sesión desde la página de **Login**.
+4. Navegar por las secciones de catálogo:
+   - Laptops.
+   - Celulares.
+   - Tablets.
+   - Televisores.
+5. Seleccionar productos y realizar pedidos; los pedidos se guardan en la tabla `pedidos`.
+6. Iniciar sesión como administrador para acceder al **panel de administración**, revisar pedidos y actualizar su estado (`pendiente`, `confirmado`, `cancelado`).
+
+## 7. Ejecución con Docker (opcional)
+
+> Usar esta sección solo en máquinas que tengan Docker instalado.
+
+1. Ir a la carpeta donde se encuentra `docker-compose.yml` (por ejemplo `PROYECTO-IDWEB/docker`).
+
+2. Construir e iniciar los contenedores:
+
+docker compose build
+docker compose up
+
+
+3. Abrir en el navegador:
+
+http://localhost:5000
+
+
+La aplicación se ejecutará dentro de un contenedor de Python conectado a un contenedor de MySQL inicializado con los scripts SQL.
+
+## 8. Trabajo futuro
+
+- Mejorar la responsividad del frontend para dispositivos móviles y tablets.
+- Implementar CRUD completo para productos desde el panel de administración (crear, editar y eliminar productos).
+- Añadir un sistema de carrito de compras más detallado y flujo de pago simulado.
+- Desplegar la aplicación en un servidor remoto con dominio propio y HTTPS.
+- Agregar pruebas automáticas básicas para rutas críticas (registro, login, creación de pedidos).
